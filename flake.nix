@@ -26,7 +26,7 @@
           src = craneLib.cleanCargoSource (craneLib.path ./.);
           pname = "manmap";
         });
-      in with pkgs; {
+      in with pkgs; rec {
         packages = rec {
           manmap = craneLib.buildPackage {
             src = craneLib.path ./.;
@@ -40,7 +40,7 @@
         };
 
         overlay = final: prev: {
-          inherit (self.packages.${final.system}) manmap;
+          manmap = packages.manmap;
         };
 
         devShells.${system}.default = mkShell {
